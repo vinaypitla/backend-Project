@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -22,25 +21,20 @@ public class AppUserController {
     public ResponseEntity<?> registerUser(@RequestBody AppUser user) {
         try {
             AppUser savedUser = appUserService.registerUser(user);
-            return AppUser.ok(savedUser);
+            return ResponseEntity.ok(savedUser);
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error registering user: " + e.getMessage());
         }
     }
 
-    @PostMapping("/login")
+    @RequestMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody AppUser user) {
         Optional<AppUser> authenticatedUser = appUserService.authenticate(user.getEmail(), user.getPassword());
 
         if (authenticatedUser.isPresent()) {
-            return ResponseEntity.ok(authenticatedUser.get()); // Now includes username
+            return ResponseEntity.ok("Login successful");
         } else {
             return ResponseEntity.status(401).body("Invalid email or password");
         }
-    }
-eturn ResponseEntity.status(401).body("Invalid email or password");
-        }
-    }
-
     }
 }

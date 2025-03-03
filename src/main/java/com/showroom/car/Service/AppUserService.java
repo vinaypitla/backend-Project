@@ -22,4 +22,9 @@ public class AppUserService {
     public Optional<AppUser> authenticate(String email, String password) {
         return userRepository.findByEmailAndPassword(email, password);
     }
+
+	public AppUser getProfile(String email) {
+		// TODO Auto-generated method stub
+		return userRepository.findById(email).orElse(new AppUser());
+	}
 }
